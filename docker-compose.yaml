@@ -1,0 +1,24 @@
+version: '3'
+services:
+  postgres_db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PORT: ${DB_PORT}
+      PGPORT: ${DB_PORT}
+      POSTGRES_TIMEZONE: "Asia/Tashkent"
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - nest_auth_project_db:/var/lib/postgresql/data
+
+volumes:
+  nest_auth_project_db:
+    driver: local
+
+networks:
+  nest_auth_project_net:
+    driver: bridge
