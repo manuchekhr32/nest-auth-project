@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -10,6 +11,8 @@ import * as Joi from 'joi';
         PORT: Joi.number().port().default(9000),
         CORS: Joi.string().default('*'),
         SWAGGER_ENABLED: Joi.boolean().default(false),
+        JWT_ACCESS_SECRET: Joi.string(),
+        JWT_REFRESH_SECRET: Joi.string(),
         // DB
         DB_USER: Joi.string(),
         DB_PASSWORD: Joi.string(),
@@ -22,6 +25,7 @@ import * as Joi from 'joi';
         abortEarly: true,
       },
     }),
+    AuthModule,
   ],
 })
 export class AppModule {}
