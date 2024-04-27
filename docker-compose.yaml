@@ -1,5 +1,20 @@
 version: '3'
 services:
+  app:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PORT: ${PORT}
+      DB_HOST: postgres_db
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres_db
+    networks:
+      - nest_auth_project_net
+
   postgres_db:
     image: postgres:15-alpine
     restart: always
@@ -14,6 +29,8 @@ services:
       - ${DB_PORT}:${DB_PORT}
     volumes:
       - nest_auth_project_db:/var/lib/postgresql/data
+    networks:
+      - nest_auth_project_net
 
 volumes:
   nest_auth_project_db:
